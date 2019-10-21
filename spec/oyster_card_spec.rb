@@ -8,6 +8,11 @@ describe Oystercard do
   end
 
   it "has a default balance of 0" do
-    expect (oystercard.balance).to eq 0
+    expect(oystercard.balance).to eq 0
+  end
+
+  it "can top up the balance" do
+    oystercard.top_up(10)
+    expect(oystercard.balance).to eq 10
   end
 end
