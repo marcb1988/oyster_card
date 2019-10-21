@@ -18,6 +18,12 @@ describe Oystercard do
 
   it 'cannot be topped up beyond the max £90' do
     oystercard.top_up(90)
-    expect{oystercard.top_up}.to raise_error("Cannot top up more than £90")
+    expect{oystercard.top_up(1)}.to raise_error "Cannot top up more than £90"
+  end
+
+  it 'can deduct funds to pay for fares' do
+    oystercard.top_up(20)
+    oystercard.deduct(10)
+    expect(oystercard.balance).to eq 10
   end
 end
