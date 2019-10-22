@@ -4,6 +4,7 @@ class Oystercard
 
   def initialize
     @balance = 0
+    @in_journey = false
   end
 
   def top_up(num)
@@ -15,4 +16,20 @@ class Oystercard
     fail "You don't have enough funds" if @balance - num < 0
     @balance -= num
   end
+
+  def touch_in
+    fail "You are already registered in journey" if @in_journey == true
+    fail "Insufficient Funds" if @balance < 1
+    @in_journey = true
+  end
+
+  def touch_out
+    fail "You are not registered as in journey" if @in_journey == false
+    @in_journey = false
+  end
+
+  def in_journey?
+    return @in_journey
+  end
+
 end

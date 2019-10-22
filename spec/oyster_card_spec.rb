@@ -36,11 +36,16 @@ describe Oystercard do
     oystercard.touch_in
     expect(oystercard.in_journey?).to be true
   end
-  
+
   it "can track when you touch out and are no longer on a journey" do
     oystercard.top_up(10.00)
+    oystercard.touch_in
     oystercard.touch_out
     expect(oystercard.in_journey?).to be false
+  end
+
+  it "prevents touching in if balance is less than the minimum fare" do
+    expect{oystercard.touch_in}.to raise_error "Insufficient Funds"
   end
   
 end
