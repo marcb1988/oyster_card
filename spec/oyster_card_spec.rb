@@ -47,5 +47,11 @@ describe Oystercard do
   it "prevents touching in if balance is less than the minimum fare" do
     expect{oystercard.touch_in}.to raise_error "Insufficient Funds"
   end
+
+  it "deducts funds on touch out to pay for Journey" do
+    oystercard.top_up(10.00)
+    oystercard.touch_in
+    expect{oyster_card.touch_out}.to change{oyster_card.balance}.by(-1)
+  end
   
 end
