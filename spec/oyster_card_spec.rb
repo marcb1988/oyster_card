@@ -27,31 +27,38 @@ describe Oystercard do
 
   it "can track when you touch in and go on a journey" do
     oystercard.top_up(10.00)
-    oystercard.touch_in
+    oystercard.touch_in("station1")
     expect(oystercard.in_journey?).to be true
   end
 
   it "can track when you touch out and are no longer on a journey" do
     oystercard.top_up(10.00)
-    oystercard.touch_in
+    oystercard.touch_in("station1")
     oystercard.touch_out
     expect(oystercard.in_journey?).to be false
   end
 
   it "prevents touching in if balance is less than the minimum fare" do
-    expect{oystercard.touch_in}.to raise_error "Insufficient Funds"
+    expect{oystercard.touch_in("station1")}.to raise_error "Insufficient Funds"
   end
 
   it "deducts funds on touch out to pay for Journey" do
     oystercard.top_up(10.00)
-    oystercard.touch_in
+    oystercard.touch_in("station1")
     expect{oystercard.touch_out}.to change{oystercard.balance}.by(-1)
   end
 
   it "tracks the touch in station" do
     oystercard.top_up(10)
     oystercard.touch_in("station1")
-    expect(oystercard.station).to eq "station1"
+    expect(oystercard.start_station).to eq "station1"
   end
   
+  it "keeps track of all journeys" do
+    oystercard.top_up(10)
+    oystercard.touch_in("station1")
+    oystercard.touch_out("station2")
+    expect(oystercard.journeys).to include "station1"
+  end
+
 end
