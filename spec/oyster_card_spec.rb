@@ -34,7 +34,7 @@ describe Oystercard do
   it "can track when you touch out and are no longer on a journey" do
     oystercard.top_up(10.00)
     oystercard.touch_in("station1")
-    oystercard.touch_out
+    oystercard.touch_out("station2")
     expect(oystercard.in_journey?).to be false
   end
 
@@ -45,7 +45,7 @@ describe Oystercard do
   it "deducts funds on touch out to pay for Journey" do
     oystercard.top_up(10.00)
     oystercard.touch_in("station1")
-    expect{oystercard.touch_out}.to change{oystercard.balance}.by(-1)
+    expect{oystercard.touch_out("station2")}.to change{oystercard.balance}.by(-1)
   end
 
   it "tracks the touch in station" do
@@ -53,12 +53,16 @@ describe Oystercard do
     oystercard.touch_in("station1")
     expect(oystercard.start_station).to eq "station1"
   end
+
+  it "has an empty list of journeys on initialisation" do
+    expect(oystercard.journeys).to be_empty
+  end
   
   it "keeps track of all journeys" do
     oystercard.top_up(10)
     oystercard.touch_in("station1")
     oystercard.touch_out("station2")
-    expect(oystercard.journeys).to include "station1"
+    expect(oystercard.journeys).to include ["station1", "station2"]
   end
 
 end
