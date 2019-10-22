@@ -48,7 +48,10 @@ describe Oystercard do
     expect{oystercard.touch_out}.to change{oystercard.balance}.by(-1)
   end
 
-  it do
+  it "tracks the touch in station" do
+    oystercard.top_up(10)
+    oystercard.touch_in("station1")
+    expect(oystercard.station).to eq "station1"
   end
   
 end
