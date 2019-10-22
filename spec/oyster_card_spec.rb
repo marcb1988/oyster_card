@@ -21,12 +21,6 @@ describe Oystercard do
     expect{oystercard.top_up(1)}.to raise_error "Cannot top up more than £90"
   end
 
-  it 'can deduct funds to pay for fares' do
-    oystercard.top_up(20)
-    oystercard.deduct(10)
-    expect(oystercard.balance).to eq 10
-  end
-
   it "can tell if you are in a journey or not" do
     expect(oystercard.in_journey?).to eq(true).or eq(false)
   end
@@ -51,7 +45,10 @@ describe Oystercard do
   it "deducts funds on touch out to pay for Journey" do
     oystercard.top_up(10.00)
     oystercard.touch_in
-    expect{oyster_card.touch_out}.to change{oyster_card.balance}.by(-1)
+    expect{oystercard.touch_out}.to change{oystercard.balance}.by(-1)
+  end
+
+  it do
   end
   
 end
