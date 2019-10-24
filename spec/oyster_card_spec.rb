@@ -1,7 +1,10 @@
 require "oyster_card"
+require "./lib/station"
+require "./lib/journey"
 
 describe Oystercard do
   let(:oystercard) { Oystercard.new }
+  let(:journey) {Journey.new}
 
   it "creates and instance of Oystercard" do
     expect(oystercard).to be_instance_of Oystercard
@@ -53,16 +56,4 @@ describe Oystercard do
     oystercard.touch_in("station1")
     expect(oystercard.start_station).to eq "station1"
   end
-
-  it "has an empty list of journeys on initialisation" do
-    expect(oystercard.journeys).to be_empty
-  end
-  
-  it "keeps track of all journeys" do
-    oystercard.top_up(10)
-    oystercard.touch_in("station1")
-    oystercard.touch_out("station2")
-    expect(oystercard.journeys).to include ["station1", "station2"]
-  end
-
 end
